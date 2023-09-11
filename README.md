@@ -10,7 +10,10 @@ GUILD_ID=[server/guild token]
 CLIENT_ID=[bot's client id]
 ```
 3. Run `npm install`
-4. Wait until I write an actual buildscript :(
-5. Install [nodemon](https://www.npmjs.com/package/nodemon) while you wait
-6. Run `nodemon`.
-
+4. Run `npm start`
+5. Profit! You should see the following messages appear in the console output:
+```
+Registering slash commands...
+Slash commands registered.
+✔️  BotName#0000 has connected!
+```
