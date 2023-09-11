@@ -2,6 +2,8 @@ import { Client, IntentsBitField } from 'discord.js'
 import * as chrono from 'chrono-node'
 require('dotenv').config()
 
+const DEBUG = false
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -20,7 +22,7 @@ const getUTC = function (timestring: string) {
 }
 
 client.on('messageCreate', message => {
-    console.log(message)
+    if(DEBUG) console.log(message)
     if(!message.author.bot && message.content.startsWith("ts"))
     {
         try {
