@@ -15,37 +15,34 @@ client.on('ready', (c) => {
     console.log(`✔️  ${c.user.tag} has connected!`)
 })
 
+const getUTC = function (timestring: string) {
+    return Math.floor(chrono.parseDate(timestring).valueOf()/1000)
+}
+
+client.on('messageCreate', message => {
+    console.log(message)
+    if(!message.author.bot && message.content.startsWith("ts"))
+    {
+        try {
+            const timestring = message.content.split(" ").slice(1).join(" ")
+            const timestamp = getUTC(timestring)
+            const reply = `\`<t:${timestamp}:R>\``
+            message.reply(reply)
+        }
+        catch (error) {
+            message.reply("Sorry, something went wrong.")
+            console.log(error)
+        }
+    }
+})  
+
 client.on('interactionCreate', (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === "timestamp") {
-        let offsetValue = ""
-        const offset = interaction.options.get('offset')?.value as number
-        if (offset < 0) {const offsetValue = `-${offset}`}
-        else {const offsetValue = `+${offset}`}
-
-        const type = interaction.options.get('type')?.value as string
-        const day = interaction.options.get('day')?.value as number
-        const month = interaction.options.get('month')?.value as number
-        const year = interaction.options.get('year')?.value as number
-        const hour = interaction.options.get('hour')?.value ? interaction.options.get('hour')?.value as number : 10
-        const minute = interaction.options.get('hour')?.value ? interaction.options.get('hour')?.value as number : 0
-        
-        const timestamp = Date.parse(`${year}-${month}-${day} ${hour}:${minute}:00:00 GMT${offsetValue}`)/1000
-        const reply = `<t:${timestamp}:${type}>\nt:${timestamp}:${type}`
-
-        console.log(timestamp)
-        console.log(reply)
-
-        interaction.reply(reply)
-    }
-
-    else if (interaction.commandName === "string-timestamp") {
+    else if (interaction.commandName === "timestamp") {
         console.log("Generating timestamp...")
         const type = interaction.options.get('type')?.value as string
-        console.log(interaction.options.get('timestring')?.value as string)
-        const timestamp = Math.floor(chrono.parseDate(interaction.options.get('timestring')?.value as string).valueOf()/1000)
-        console.log(timestamp)
+        const timestamp = getUTC(interaction.options.get('timestring')?.value as string)
         const reply = `<t:${timestamp}:${type}>\nt:${timestamp}:${type}`
 
         interaction.reply(reply)
