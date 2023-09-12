@@ -2,6 +2,7 @@
 A discord bot to make my life a little easier.
 
 ### Usage
+These steps are assuming you have made a bot in the discord developer portal - you'll need the unique token from there to use this! Make sure to select the appropriate permissions and add the bot your server before following these steps.
 1. Download the repo
 2. Create a `.env` file with the following variables:
 ```
